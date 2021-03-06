@@ -54,7 +54,6 @@ MAKE_HOOK_OFFSETLESS(FlyingScoreEffect_HandleSaberSwingRatingCounterDidChangeEve
     static auto* scoreText = il2cpp_utils::createcsstr("115", il2cpp_utils::StringType::Manual);
     auto* textObj = RET_V_UNLESS(getLogger(), il2cpp_utils::GetFieldValue(self, "_text"));
     RET_V_UNLESS(getLogger(), il2cpp_utils::SetPropertyValue(textObj, "text", scoreText));
-
 }
 
 void backupAndOverwriteConfig() {
@@ -75,7 +74,6 @@ extern "C" void setup(ModInfo& info) {
 
     hsvInfo.id = "QuestHitscoreVisualizer"
     hsvInfo.version = "4.2.1";
-	
 
     getConfig().Load(); // Load the config file
     getLogger().info("Completed setup!");
