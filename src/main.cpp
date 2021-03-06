@@ -1,6 +1,5 @@
 #include "main.hpp"
 #include "extern/beatsaber-hook/shared/utils/il2cpp-utils.hpp"
-#include "extern/beatsaber-hook/shared/utils/il2cpp-utils-properties.hpp"
 #include "extern/codegen/include/GlobalNamespace/FlyingScoreEffect.hpp"
 
 static ModInfo modInfo; // Stores the ID and version of our mod, and is sent to the modloader upon startup
@@ -57,11 +56,10 @@ MAKE_HOOK_OFFSETLESS(FlyingScoreEffect_HandleSaberSwingRatingCounterDidChangeEve
 }
 
 void backupAndOverwriteConfig() {
-    Array text = getConfig().config["judgments"][0]["text"].GetString(); 
+    std::string text = getConfig().config["judgments"][0]["text"].GetString();
 
-    if (config.config["judgements"].GetArray)
-    {
-        config.AddMember()
+    if (!text.compare("115")) {
+        // isn't our config, backup and then add ours.
     }
     
 }
@@ -72,7 +70,7 @@ extern "C" void setup(ModInfo& info) {
     info.version = "1.0.0";
     modInfo = info;
 
-    hsvInfo.id = "QuestHitscoreVisualizer"
+    hsvInfo.id = "QuestHitscoreVisualizer";
     hsvInfo.version = "4.2.1";
 
     getConfig().Load(); // Load the config file
