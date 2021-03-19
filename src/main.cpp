@@ -82,7 +82,9 @@ extern "C" void setup(ModInfo& info) {
     if (modList.contains("HitscoreVisualizer")) {
         hsvIsLoaded = true;
         backupAndOverwriteConfig();
+        getLogger().info("hsv is loaded");
     } else {
+        hsvIsLoaded = false;
         getLogger().info("hsv is not loaded");
     }
     
