@@ -51,12 +51,13 @@ MAKE_HOOK_OFFSETLESS(FlyingScoreEffect_HandleSaberSwingRatingCounterDidChangeEve
 
     // create a new C# string and set the text of _text to the string
     static auto* scoreText = il2cpp_utils::createcsstr("115", il2cpp_utils::StringType::Manual);
+
     auto* textObj = RET_V_UNLESS(getLogger(), il2cpp_utils::GetFieldValue(self, "_text"));
     RET_V_UNLESS(getLogger(), il2cpp_utils::SetPropertyValue(textObj, "text", scoreText));
 }
 
 void backupAndOverwriteConfig() {
-    std::string text = getConfig().config["judgments"][0]["text"].GetString();
+    std::string text = getHSVConfig().config["judgments"][0]["text"].GetString();
 
     if (!text.compare("115")) {
         // isn't our config, backup and then add ours.

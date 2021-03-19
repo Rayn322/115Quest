@@ -8,7 +8,7 @@
     "Converts all hits to 115!!!!1!11"
   ],
   "category": "Gameplay",
-  "gameVersion": "1.13.2",
+  "gameVersion": "1.14.0",
   "platform": "Quest",
   "components": [
     {
@@ -23,7 +23,7 @@
     {
       "type": "HookModLibrary",
       "installAction": {
-        "installLibraryFile": "libbeatsaber-hook_1_1_2.so"
+        "installLibraryFile": "libbeatsaber-hook_1_2_3.so"
       }
     }
   ]
