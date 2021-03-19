@@ -4,6 +4,7 @@
 
 static ModInfo modInfo; // Stores the ID and version of our mod, and is sent to the modloader upon startup
 static ModInfo hsvInfo;
+static bool hsvIsLoaded;
 
 // Loads the config from disk using our modInfo, then returns it for use
 Configuration& getConfig() {
@@ -61,8 +62,10 @@ void backupAndOverwriteConfig() {
 
     if (!text.compare("115")) {
         // isn't our config, backup and then add ours.
+        getLogger().info("not using 115mod hsv config");
+    } else {
+        getLogger().info("already using 115mod hsv config");
     }
-    
 }
 
 // Called at the early stages of game loading
@@ -74,6 +77,15 @@ extern "C" void setup(ModInfo& info) {
     hsvInfo.id = "QuestHitscoreVisualizer";
     hsvInfo.version = "4.2.1";
 
+    std::unordered_map<std::string, const Mod> modList = Modloader::getMods();
+    
+    if (modList.contains("HitscoreVisualizer")) {
+        hsvIsLoaded = true;
+        backupAndOverwriteConfig();
+    } else {
+        getLogger().info("hsv is not loaded");
+    }
+    
     getConfig().Load(); // Load the config file
     getLogger().info("Completed setup!");
 }
