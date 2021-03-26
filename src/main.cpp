@@ -46,9 +46,9 @@ MAKE_HOOK_OFFSETLESS(FlyingScoreEffect_InitAndPresent, void, Il2CppObject* self,
     RET_V_UNLESS(getLogger(), il2cpp_utils::SetPropertyValue(underlineIndicator, "enabled", true));
 }
 
-MAKE_HOOK_OFFSETLESS(FlyingScoreEffect_HandleSaberSwingRatingCounterDidChangeEvent, void, Il2CppObject* self, Il2CppObject* saberSwingRatingCounter, float rating) {
+MAKE_HOOK_OFFSETLESS(FlyingScoreEffect_HandleSaberSwingRatingCounterDidChange, void, Il2CppObject* self, Il2CppObject* saberSwingRatingCounter, float rating) {
     // run original code
-    FlyingScoreEffect_HandleSaberSwingRatingCounterDidChangeEvent(self, saberSwingRatingCounter, rating);
+    FlyingScoreEffect_HandleSaberSwingRatingCounterDidChange(self, saberSwingRatingCounter, rating);
 
     // create a new C# string and set the text of _text to the string
     static auto* scoreText = il2cpp_utils::createcsstr("115", il2cpp_utils::StringType::Manual);
@@ -99,6 +99,6 @@ extern "C" void load() {
     getLogger().info("Installing hooks...");
     INSTALL_HOOK_OFFSETLESS(getLogger(), RelativeScoreAndImmediateRankCounter_UpdateRelativeScoreAndImmediateRank, il2cpp_utils::FindMethodUnsafe("", "RelativeScoreAndImmediateRankCounter", "UpdateRelativeScoreAndImmediateRank", 4));
     INSTALL_HOOK_OFFSETLESS(getLogger(), FlyingScoreEffect_InitAndPresent, il2cpp_utils::FindMethodUnsafe("", "FlyingScoreEffect", "InitAndPresent", 6));
-    INSTALL_HOOK_OFFSETLESS(getLogger(), FlyingScoreEffect_HandleSaberSwingRatingCounterDidChangeEvent, il2cpp_utils::FindMethodUnsafe("", "FlyingScoreEffect", "HandleSaberSwingRatingCounterDidChangeEvent", 2));
+    INSTALL_HOOK_OFFSETLESS(getLogger(), FlyingScoreEffect_HandleSaberSwingRatingCounterDidChange, il2cpp_utils::FindMethodUnsafe("", "FlyingScoreEffect", "HandleSaberSwingRatingCounterDidChange", 2));
     getLogger().info("Installed all hooks!");
 }
