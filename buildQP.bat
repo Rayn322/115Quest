@@ -1,0 +1,1 @@
+powershell -ExecutionPolicy Bypass -File ./buildQP.ps1
