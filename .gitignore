@@ -43,6 +43,7 @@ out/
 [Oo]bjs/
 ndkpath.txt
 *.zip
+*.qmod
 *.txt
 extern/
 Android.mk.backup
@@ -50,7 +51,4 @@ qpm.shared.json
 
 # Other
 buildBMBF.bat
-libQuestHitscoreVisualizer.so
-QuestHitscoreVisualizer.json
-QuestHitscoreVisualizer_v4.2.1.zip
-
+buildQP.bat
