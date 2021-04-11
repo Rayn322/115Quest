@@ -43,7 +43,6 @@ out/
 [Oo]bjs/
 ndkpath.txt
 *.zip
-*.qmod
 *.txt
 extern/
 Android.mk.backup
@@ -51,4 +50,5 @@ qpm.shared.json
 
 # Other
 buildBMBF.bat
-buildQP.bat
+buildQMOD.bat
+*.qmod
