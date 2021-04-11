@@ -1,6 +1,7 @@
 # 115Mod
 
 Converts all hits to 115!!!!1!11
+(all changes are purely visual, no scores are modified)
 
 ## Credits
 
