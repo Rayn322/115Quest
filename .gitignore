@@ -50,7 +50,5 @@ qpm.shared.json
 
 # Other
 buildBMBF.bat
-libQuestHitscoreVisualizer.so
-QuestHitscoreVisualizer.json
-QuestHitscoreVisualizer_v4.2.1.zip
-
+buildQMOD.bat
+*.qmod

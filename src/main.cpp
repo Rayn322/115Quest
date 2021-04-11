@@ -3,18 +3,10 @@
 #include "extern/codegen/include/GlobalNamespace/FlyingScoreEffect.hpp"
 
 static ModInfo modInfo; // Stores the ID and version of our mod, and is sent to the modloader upon startup
-static ModInfo hsvInfo;
-static bool hsvIsLoaded;
 
 // Loads the config from disk using our modInfo, then returns it for use
 Configuration& getConfig() {
     static Configuration config(modInfo);
-    config.Load();
-    return config;
-}
-
-Configuration& getHSVConfig() {
-    static Configuration config(hsvInfo);
     config.Load();
     return config;
 }
@@ -25,13 +17,6 @@ Logger& getLogger() {
     return *logger;
 }
 
-const ModInfo& getModInfo() {
-    return modInfo;
-}
-
-const ModInfo& getHSVModInfo() {
-    return hsvInfo;
-}
 
 MAKE_HOOK_OFFSETLESS(RelativeScoreAndImmediateRankCounter_UpdateRelativeScoreAndImmediateRank, void, Il2CppObject* self, int score, int modifiedScore, int maxPossibleScore, int maxPossibleModifiedScore) {
     // do nothing so the acc stays at 100% and rank stays at SS
@@ -50,44 +35,16 @@ MAKE_HOOK_OFFSETLESS(FlyingScoreEffect_HandleSaberSwingRatingCounterDidChange, v
     // run original code
     FlyingScoreEffect_HandleSaberSwingRatingCounterDidChange(self, saberSwingRatingCounter, rating);
 
-    // create a new C# string and set the text of _text to the string
-    static auto* scoreText = il2cpp_utils::createcsstr("115", il2cpp_utils::StringType::Manual);
-
     auto* textObj = RET_V_UNLESS(getLogger(), il2cpp_utils::GetFieldValue(self, "_text"));
-    RET_V_UNLESS(getLogger(), il2cpp_utils::SetPropertyValue(textObj, "text", scoreText));
-}
-
-void backupAndOverwriteConfig() {
-    std::string text = getHSVConfig().config["judgments"][0]["text"].GetString();
-
-    if (!text.compare("115")) {
-        // isn't our config, backup and then add ours.
-        getLogger().info("not using 115mod hsv config");
-    } else {
-        getLogger().info("already using 115mod hsv config");
-    }
+    RET_V_UNLESS(getLogger(), il2cpp_utils::SetPropertyValue(textObj, "text", il2cpp_utils::createcsstr("115")));
 }
 
 // Called at the early stages of game loading
 extern "C" void setup(ModInfo& info) {
-    info.id = "115Mod";
-    info.version = "1.0.0";
+    info.id = ID;
+    info.version = VERSION;
     modInfo = info;
-
-    hsvInfo.id = "QuestHitscoreVisualizer";
-    hsvInfo.version = "4.2.1";
-
-    std::unordered_map<std::string, const Mod> modList = Modloader::getMods();
-    
-    if (modList.contains("HitscoreVisualizer")) {
-        hsvIsLoaded = true;
-        backupAndOverwriteConfig();
-        getLogger().info("hsv is loaded");
-    } else {
-        hsvIsLoaded = false;
-        getLogger().info("hsv is not loaded");
-    }
-    
+	
     getConfig().Load(); // Load the config file
     getLogger().info("Completed setup!");
 }
