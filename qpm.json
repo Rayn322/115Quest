@@ -10,16 +10,12 @@
   },
   "dependencies": [
     {
-      "id": "beatsaber-hook",
+      "id": "codegen",
       "versionRange": "*",
-      "additionalData": {
-        "extraFiles": [
-          "src/inline-hook"
-        ]
-      }
+      "additionalData": {}
     },
     {
-      "id": "codegen",
+      "id": "beatsaber-hook",
       "versionRange": "*",
       "additionalData": {}
     }

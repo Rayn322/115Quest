@@ -1,4 +1,3 @@
-
 {
     "_QPVersion": "0.1.1",
     "name": "115 Mod",
@@ -12,6 +11,6 @@
         "lib115Mod.so"
     ],
     "libraryFiles": [
-        "libbeatsaber-hook_1_3_3.so"
+        "libbeatsaber-hook_1_3_5.so"
     ]
 }

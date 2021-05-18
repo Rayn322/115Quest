@@ -36,7 +36,7 @@ MAKE_HOOK_OFFSETLESS(FlyingScoreEffect_HandleSaberSwingRatingCounterDidChange, v
     FlyingScoreEffect_HandleSaberSwingRatingCounterDidChange(self, saberSwingRatingCounter, rating);
 
     auto* textObj = RET_V_UNLESS(getLogger(), il2cpp_utils::GetFieldValue(self, "_text"));
-    RET_V_UNLESS(getLogger(), il2cpp_utils::SetPropertyValue(textObj, "text", il2cpp_utils::createcsstr("115")));
+    RET_V_UNLESS(getLogger(), il2cpp_utils::SetPropertyValue(textObj, "text", il2cpp_utils::newcsstr("115")));
 }
 
 // Called at the early stages of game loading
