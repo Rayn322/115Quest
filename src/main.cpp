@@ -1,6 +1,8 @@
 #include "main.hpp"
+#include "beatsaber-hook/shared/utils/hooking.hpp"
 #include "extern/beatsaber-hook/shared/utils/il2cpp-utils.hpp"
-#include "extern/codegen/include/GlobalNamespace/FlyingScoreEffect.hpp"
+#include "GlobalNamespace/RelativeScoreAndImmediateRankCounter.hpp"
+#include "GlobalNamespace/FlyingScoreEffect.hpp"
 
 static ModInfo modInfo; // Stores the ID and version of our mod, and is sent to the modloader upon startup
 
@@ -17,13 +19,12 @@ Logger& getLogger() {
     return *logger;
 }
 
-
-MAKE_HOOK_OFFSETLESS(RelativeScoreAndImmediateRankCounter_UpdateRelativeScoreAndImmediateRank, void, Il2CppObject* self, int score, int modifiedScore, int maxPossibleScore, int maxPossibleModifiedScore) {
+MAKE_HOOK_MATCH(RelativeScoreAndImmediateRankCounter_UpdateRelativeScoreAndImmediateRank, &GlobalNamespace::RelativeScoreAndImmediateRankCounter::UpdateRelativeScoreAndImmediateRank, void, GlobalNamespace::RelativeScoreAndImmediateRankCounter* self, int score, int modifiedScore, int maxPossibleScore, int maxPossibleModifiedScore) {
     // do nothing so the acc stays at 100% and rank stays at SS
 }
 
-MAKE_HOOK_OFFSETLESS(FlyingScoreEffect_InitAndPresent, void, Il2CppObject* self, Il2CppObject* noteCutInfo, int multiplier, float duration, UnityEngine::Vector3 targetPos, UnityEngine::Quaternion rotation, UnityEngine::Color color) {
-    // run original code
+MAKE_HOOK_MATCH(FlyingScoreEffect_InitAndPresent, &GlobalNamespace::FlyingScoreEffect::InitAndPresent, void, GlobalNamespace::FlyingScoreEffect* self, ByRef<GlobalNamespace::NoteCutInfo> noteCutInfo, int multiplier, float duration, UnityEngine::Vector3 targetPos, UnityEngine::Quaternion rotation, UnityEngine::Color color) {
+    // run original method
     FlyingScoreEffect_InitAndPresent(self, noteCutInfo, multiplier, duration, targetPos, rotation, color);
 
     // get _maxCutDistanceScoreIndicator and set the enabled property to true
@@ -31,10 +32,11 @@ MAKE_HOOK_OFFSETLESS(FlyingScoreEffect_InitAndPresent, void, Il2CppObject* self,
     RET_V_UNLESS(getLogger(), il2cpp_utils::SetPropertyValue(underlineIndicator, "enabled", true));
 }
 
-MAKE_HOOK_OFFSETLESS(FlyingScoreEffect_HandleSaberSwingRatingCounterDidChange, void, Il2CppObject* self, Il2CppObject* saberSwingRatingCounter, float rating) {
-    // run original code
+MAKE_HOOK_MATCH(FlyingScoreEffect_HandleSaberSwingRatingCounterDidChange, &GlobalNamespace::FlyingScoreEffect::HandleSaberSwingRatingCounterDidChange, void, GlobalNamespace::FlyingScoreEffect* self, GlobalNamespace::ISaberSwingRatingCounter* saberSwingRatingCounter, float rating) {
+    // run original method
     FlyingScoreEffect_HandleSaberSwingRatingCounterDidChange(self, saberSwingRatingCounter, rating);
 
+    // set the text from _text to 115
     auto* textObj = RET_V_UNLESS(getLogger(), il2cpp_utils::GetFieldValue(self, "_text"));
     RET_V_UNLESS(getLogger(), il2cpp_utils::SetPropertyValue(textObj, "text", il2cpp_utils::newcsstr("115")));
 }
@@ -54,8 +56,8 @@ extern "C" void load() {
     il2cpp_functions::Init();
 
     getLogger().info("Installing hooks...");
-    INSTALL_HOOK_OFFSETLESS(getLogger(), RelativeScoreAndImmediateRankCounter_UpdateRelativeScoreAndImmediateRank, il2cpp_utils::FindMethodUnsafe("", "RelativeScoreAndImmediateRankCounter", "UpdateRelativeScoreAndImmediateRank", 4));
-    INSTALL_HOOK_OFFSETLESS(getLogger(), FlyingScoreEffect_InitAndPresent, il2cpp_utils::FindMethodUnsafe("", "FlyingScoreEffect", "InitAndPresent", 6));
-    INSTALL_HOOK_OFFSETLESS(getLogger(), FlyingScoreEffect_HandleSaberSwingRatingCounterDidChange, il2cpp_utils::FindMethodUnsafe("", "FlyingScoreEffect", "HandleSaberSwingRatingCounterDidChange", 2));
+    INSTALL_HOOK(getLogger(), RelativeScoreAndImmediateRankCounter_UpdateRelativeScoreAndImmediateRank);
+    INSTALL_HOOK(getLogger(), FlyingScoreEffect_InitAndPresent);
+    INSTALL_HOOK(getLogger(), FlyingScoreEffect_HandleSaberSwingRatingCounterDidChange);
     getLogger().info("Installed all hooks!");
 }
