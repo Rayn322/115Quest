@@ -39,6 +39,9 @@ MAKE_HOOK_MATCH(FlyingScoreEffect_HandleSaberSwingRatingCounterDidChange, &Globa
     // set the text from _text to 115
     auto* textObj = RET_V_UNLESS(getLogger(), il2cpp_utils::GetFieldValue(self, "_text"));
     RET_V_UNLESS(getLogger(), il2cpp_utils::SetPropertyValue(textObj, "text", il2cpp_utils::newcsstr("115")));
+
+    // set the alpha multiplier to 1.0 to emulate a 115 score
+    RET_V_UNLESS(getLogger(), il2cpp_utils::SetFieldValue(self, "_colorAMultiplier", 1.0f));
 }
 
 // Called at the early stages of game loading
