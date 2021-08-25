@@ -1,6 +1,6 @@
 #include "main.hpp"
 #include "beatsaber-hook/shared/utils/hooking.hpp"
-#include "extern/beatsaber-hook/shared/utils/il2cpp-utils.hpp"
+#include "beatsaber-hook/shared/utils/il2cpp-utils.hpp"
 #include "GlobalNamespace/RelativeScoreAndImmediateRankCounter.hpp"
 #include "GlobalNamespace/FlyingScoreEffect.hpp"
 
@@ -49,7 +49,7 @@ extern "C" void setup(ModInfo& info) {
     info.id = ID;
     info.version = VERSION;
     modInfo = info;
-	
+
     getConfig().Load(); // Load the config file
     getLogger().info("Completed setup!");
 }
